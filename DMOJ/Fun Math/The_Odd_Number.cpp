@@ -1,19 +1,16 @@
-#include<bits/stdc++.h>
+#include <stdio.h>
 
 using namespace std;
 
 int N, x, ans;
 
 int main() {
-    ios::sync_with_stdio(0);
-    cin.tie(0), cout.tie(0);
-
-    cin >> N;
+    scanf("%d", &N);
 
     for (int i = 0; i < N; i++) {
-        cin >> x;
+        scanf("%d", &x);
         ans ^= x;
     }
 
-    cout << ans << '\n';
+    printf("%d\n", ans);
 }
