@@ -1,4 +1,4 @@
-fun main(){
+fun main() {
     val input = readLine()!!.split(' ')
 
     val mA = input[0].replace('6', '5')
