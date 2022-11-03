@@ -40,7 +40,6 @@ def back_sub(mat):
     for p in pivots:
         var_val[p] = "_"
 
-
     # Looping rows
     for row in mat:
         # Not row of empty values
