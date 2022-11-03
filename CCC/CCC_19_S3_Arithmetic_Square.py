@@ -163,7 +163,9 @@ while True:
         art.append(int(ans*ans.denominator))
 
     if is_arith(art):
-        print(f"{art[0]} {art[1]} {art[2]}\n \
-                {art[3]} {art[4]} {art[5]}\n \
-                {art[6]} {art[7]} {art[8]}")
+        print(
+            f"{art[0]} {art[1]} {art[2]}\n"
+            f"{art[3]} {art[4]} {art[5]}\n"
+            f"{art[6]} {art[7]} {art[8]}"
+        )
         break
