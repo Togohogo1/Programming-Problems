@@ -6,11 +6,13 @@ from random import randint
 def ge(mat):
     r = 0
     c = 0
-    mr = len(mat)
-    mc = len(mat[0])
+    mr = len(mat)  # Last row
+    mc = len(mat[0])  # Last column
 
     while r < mr and c < mc:
         tmp_idx = -1
+
+        # Finding pivot
         for i in range(r, mr):
             if mat[i][c] != 0:
                 tmp_idx = i
@@ -20,14 +22,15 @@ def ge(mat):
             c += 1
         else:
             pivots.append(xdi[c])
+
             # Swapping
             mat[r], mat[tmp_idx] = mat[tmp_idx], mat[r]
 
             for i in range(r+1, mr):
-                f = fr(mat[i][c]/mat[r][c])
+                f = fr(mat[i][c]/mat[r][c])  # Factor for matrix operations
                 mat[i][c] = 0  # Filling lower part of pivot with 0s
 
-                # Do matrix operation on remaining elements in row
+                # Do matrix operations on remaining elements in row
                 for j in range(c+1, mc):
                     mat[i][j] -= mat[r][j] * f
 
@@ -38,31 +41,32 @@ def ge(mat):
 def back_sub(mat):
     # Pivots are not assigned value
     for p in pivots:
-        var_val[p] = "_"
+        var_val[p] = None
 
-    # Looping rows
     for row in mat:
         # Not row of empty values
         if row != [0]*10:
-            ls = row[-1]  # Last value
-            nonswing_coef = 0
-            let = "_"
+            ls = row[-1]  # Last value -> right hand side
+            nonswing_coef = 0  # Coefficient of pivot
+            let = None
 
-            # First loop to swing all "swingable" variables to other side
+            # loop to swing all "swingable" variables to other side
             for j, coef in enumerate(row[:-1]):
                 if coef != 0:  # Value with coefficient
-                    if var_val[xdi[j]] != "_":
-                        ls -= coef*var_val[xdi[j]]
+                    if var_val[xdi[j]] is not None:
+                        ls -= coef*var_val[xdi[j]]  # Swing
                     else:
                         nonswing_coef = coef
                         let = xdi[j]
 
+            # Value for new letter can be determined
             var_val[let] = ls/nonswing_coef
 
 
 # Checks if is arithmetic square
 def is_arith(a):
-    return a[2]-a[1] == a[1]-a[0] and a[5]-a[4] == a[4]-a[3] and a[8]-a[7] == a[7]-a[6] and a[6]-a[3] == a[3]-a[0] and a[7]-a[4] == a[4]-a[1] and a[8]-a[5] == a[5]-a[2]
+    return a[2]-a[1] == a[1]-a[0] and a[5]-a[4] == a[4]-a[3] and a[8]-a[7] == a[7]-a[6] \
+       and a[6]-a[3] == a[3]-a[0] and a[7]-a[4] == a[4]-a[1] and a[8]-a[5] == a[5]-a[2]
 
 
 sq = []
@@ -104,6 +108,7 @@ r = [
     [term(1, "x"), term(2, "d"), term(2, "c")],
 ]
 
+# Taking input
 for i in range(3):
     sq += input().split()
 
@@ -111,34 +116,31 @@ ii = 0
 
 # Populating array to do GE on
 for count, value in enumerate(sq):
+    # Setting LHS to RHS (one equation)
     if value == "X":
         for nt in l[count]:
-            letter_pos = idx[nt.var]
-            mat[ii][letter_pos] += nt.cof
+            mat[ii][idx[nt.var]] += nt.cof
 
         for nt in r[count]:
-            letter_pos = idx[nt.var]
-            mat[ii][letter_pos] -= nt.cof
+            mat[ii][idx[nt.var]] -= nt.cof
 
         ii += 1
 
+    # Setting LHS to value (one equation), then RHS to value (another equation)
     else:
         mat[ii][-1] = int(value)
 
         for nt in l[count]:
-            letter_pos = idx[nt.var]
-            mat[ii][letter_pos] += nt.cof
+            mat[ii][idx[nt.var]] += nt.cof
 
         ii += 1
 
         mat[ii][-1] = int(value)
 
         for nt in r[count]:
-            letter_pos = idx[nt.var]
-            mat[ii][letter_pos] += nt.cof
+            mat[ii][idx[nt.var]] += nt.cof
 
         ii += 1
-
 
 # Do Gaussian elimination
 ge(mat)
@@ -161,5 +163,7 @@ while True:
         art.append(int(ans*ans.denominator))
 
     if is_arith(art):
-        print(f"{art[0]} {art[1]} {art[2]}\n{art[3]} {art[4]} {art[5]}\n{art[6]} {art[7]} {art[8]}")
+        print(f"{art[0]} {art[1]} {art[2]}\n \
+                {art[3]} {art[4]} {art[5]}\n \
+                {art[6]} {art[7]} {art[8]}")
         break
