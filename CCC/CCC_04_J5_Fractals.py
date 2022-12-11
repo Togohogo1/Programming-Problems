@@ -48,7 +48,7 @@ def f(ax, ay, width):
         if cell[rr][rc] == 1:
             return True
 
-        # Relative location of n
+        # Next zoom grid type
         cell = p[cell].get((rr, rc))
 
     return False
@@ -56,14 +56,12 @@ def f(ax, ay, width):
 
 level, width, x = list(map(int, input().split()))
 
-if x == 0 or x == width:
-    print(1)
-else:
-    for i in range(width):
-        bl = True if i == 0 else f(x-1, i-1, width)
-        br = True if i == 0 else f(x, i-1, width)
-        tl = f(x-1, i, width)
-        tr = f(x, i, width)
+for i in range(width):
+    bl = True if i == 0 else f(x-1, i-1, width)
+    br = True if i == 0 else f(x, i-1, width)
+    tl = f(x-1, i, width)
+    tr = f(x, i, width)
 
-        if not (bl == br == tl == tr):
-            print(i+1, end=" ")
+    # Intersection of 1-3 borders
+    if not (bl == br == tl == tr):
+        print(i+1, end=" ")
