@@ -5,7 +5,9 @@ def split(n):
     return 1, 0
 
 
-for i in range(int(input())):
+n = int(input())
+
+for i in range(n):
     c = 0
     rnd = [0, 0, 0]
 
@@ -27,4 +29,6 @@ for i in range(int(input())):
     print(f"Round {c+1}: 0 undefeated, 2 one-loss, {rnd[2]} eliminated")
     print(f"Round {c+2}: 0 undefeated, 1 one-loss, {rnd[2]+1} eliminated")
     print(f"There are {c+2} rounds.")
-    print()
+    
+    if i != n - 1:
+        print()
